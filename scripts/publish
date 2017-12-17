@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+TRAVIS_COMMIT=${TRAVIS_COMMIT:-$(git log -1 --format=%H)}
+
+eval $(docker run --rm -e APPROLE_ID=${APPROLE_ID} -e APPROLE_SECRET=${APPROLE_SECRET} vxlabs/vault-envexport)
+echo ${DOCKER_PASSWORD} | docker login -u="${DOCKER_USERNAME}" --password-stdin ${DOCKER_REGISTRY}
+
+export IMG=${DOCKER_REGISTRY}/vxlabs/vault-envexport
+docker tag vxlabs/vault-envexport ${IMG}:${TRAVIS_COMMIT}
+docker push ${IMG}:${TRAVIS_COMMIT}
+docker tag ${IMG}:${TRAVIS_COMMIT} ${IMG}:latest
+docker push ${IMG}:latest
