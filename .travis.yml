@@ -5,8 +5,10 @@ services:
 script:
   - make
 after_success:
+  - eval $(docker run --rm -e APPROLE_ID=$APPROLE_ID -e APPROLE_SECRET=$APPROLE_SECRET vxlabs/vault-envexport)
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-  - docker tag vxlabs/vault-envexport vxlabs/vault-envexport:$TRAVIS_COMMIT
-  - docker push vxlabs/vault-envexport:$TRAVIS_COMMIT;
-  - docker tag vxlabs/vault-envexport:$TRAVIS_COMMIT vxlabs/vault-envexport:latest
-  - docker push vxlabs/vault-envexport:latest
+  - export IMG=$DOCKER_REGISTRY/vxlabs/vault-envexport
+  - docker tag $IMG $IMG:$TRAVIS_COMMIT
+  - docker push $IMG:$TRAVIS_COMMIT;
+  - docker tag $IMG:$TRAVIS_COMMIT $IMG:latest
+  - docker push $IMG:latest
