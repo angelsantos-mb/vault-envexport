@@ -1,3 +1,3 @@
-FROM jbonachera/vault
+FROM jbonachera/alpine
 COPY release/vault-envexport /sbin/entrypoint
 ENTRYPOINT /sbin/entrypoint
