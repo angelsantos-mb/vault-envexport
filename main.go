@@ -20,6 +20,15 @@ func dumpPath(c *api.Client, prefix string) {
 	}
 }
 func main() {
+	role := os.Getenv("APPROLE_ID")
+	if role == "" {
+		logrus.Fatal("APPROLE_ID env var is required.")
+	}
+	secret_id := os.Getenv("APPROLE_SECRET")
+	if secret_id == "" {
+		logrus.Fatal("APPROLE_SECRET env var is required.")
+	}
+
 	config := api.DefaultConfig()
 	config.HttpClient = &http.Client{
 		Timeout:   1 * time.Second,
@@ -31,8 +40,8 @@ func main() {
 		logrus.Fatal(err)
 	}
 	secret, err := c.Logical().Write("auth/approle/login", map[string]interface{}{
-		"role_id":   os.Getenv("APPROLE_ID"),
-		"secret_id": os.Getenv("APPROLE_SECRET"),
+		"role_id":   role,
+		"secret_id": secret_id,
 	})
 	if err != nil {
 		logrus.Fatal(err)
