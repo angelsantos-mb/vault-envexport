@@ -1,0 +1,8 @@
+FROM vxlabs/glide
+
+RUN mkdir -p $GOPATH/src/github.com/vx-labs
+WORKDIR $GOPATH/src/github.com/vx-labs/vault-envexport
+COPY . .
+CMD glide install && \
+    go test $(glide nv) && \
+    go build -buildmode=exe -a -o /mnt/release/vault-envexport ./main.go

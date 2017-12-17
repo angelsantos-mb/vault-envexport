@@ -1,0 +1,12 @@
+sudo: required
+language: c
+services:
+  - docker
+script:
+  - make
+after_success:
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+  - docker tag vxlabs/vault-envexport vxlabs/vault-envexport:$TRAVIS_COMMIT
+  - docker push vxlabs/vault-envexport:$TRAVIS_COMMIT;
+  - docker tag vxlabs/vault-envexport:$TRAVIS_COMMIT vxlabs/vault-envexport:latest
+  - docker push vxlabs/vault-envexport:latest

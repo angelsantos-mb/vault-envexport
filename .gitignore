@@ -1,0 +1,8 @@
+.env
+.idea
+*.iml
+release/*
+pip-selfcheck.json
+venv/
+vendor
+coverage.txt

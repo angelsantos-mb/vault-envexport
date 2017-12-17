@@ -1,0 +1,8 @@
+package: github.com/vx-labs/vault-envexport
+import:
+- package: github.com/hashicorp/vault
+  version: ~0.9.0
+  subpackages:
+  - api
+- package: github.com/sirupsen/logrus
+  version: ~1.0.4
