@@ -16,7 +16,7 @@ func dumpPath(c *api.Client, prefix string) {
 		logrus.Fatal(err)
 	}
 	for key, value := range data.Data {
-		fmt.Fprint(os.Stderr, "exporting %s_%s var\n", strings.ToUpper(prefix), strings.ToUpper(key))
+		fmt.Fprintf(os.Stderr, "exporting %s_%s var\n", strings.ToUpper(prefix), strings.ToUpper(key))
 		fmt.Printf("export %s_%s=\"%s\"\n", strings.ToUpper(prefix), strings.ToUpper(key), value.(string))
 	}
 }
