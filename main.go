@@ -47,6 +47,7 @@ func main() {
 	if err != nil {
 		logrus.Fatal(err)
 	}
+	fmt.Fprintf(os.Stderr, "got token from vault for %ds, with policies %s\n", secret.Auth.LeaseDuration, strings.Join(secret.Auth.Policies,  ","))
 	c.SetToken(secret.Auth.ClientToken)
 	data, err := c.Logical().List("secret/vx/")
 	if err != nil {
